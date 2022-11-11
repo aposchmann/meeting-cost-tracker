@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../meeting/meeting_screen.dart';
+
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
@@ -10,14 +12,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: title,
       theme: ThemeData(primarySwatch: Colors.lightGreen),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
-        body: Column(
-          children: const [Text("Hello World!")],
-        ),
-      ),
+      home: MeetingScreen(title: title),
     );
   }
 }
