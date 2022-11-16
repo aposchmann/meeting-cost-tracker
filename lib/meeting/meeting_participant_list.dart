@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'meeting_participant_list_item.dart';
+
 class MeetingParticipantList extends StatefulWidget {
-  const MeetingParticipantList({Key? key}) : super(key: key);
+  const MeetingParticipantList({super.key});
 
   @override
   State<MeetingParticipantList> createState() => _MeetingParticipantListState();
@@ -13,7 +15,15 @@ class _MeetingParticipantListState extends State<MeetingParticipantList> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: participants.map((participant) => Text(participant)).toList(),
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ...participants
+            .map((participant) => MeetingParticipantListItem(
+                  participantName: participant,
+                ))
+            .toList(),
+        const MeetingParticipantListItem()
+      ],
     );
   }
 }

@@ -15,20 +15,20 @@ class MeetingScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: const [
-          SafeArea(
-            minimum: EdgeInsets.all(15),
-            child: Text(
-              "Teilnehmer",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: const [
+            SafeArea(
+              child: Text(
+                "Teilnehmer",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          SafeArea(
-              minimum: EdgeInsets.symmetric(horizontal: 15),
-              child: MeetingParticipantList())
-        ],
+            SafeArea(child: MeetingParticipantList())
+          ],
+        ),
       ),
     );
   }
