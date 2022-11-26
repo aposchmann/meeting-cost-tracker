@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:meeting_cost_tracker/meeting/meeting_participant_list.dart';
+import 'package:provider/provider.dart';
+
+import 'meeting_model.dart';
+import 'meeting_participant_list.dart';
 
 class MeetingScreen extends StatelessWidget {
   const MeetingScreen({
@@ -19,14 +22,17 @@ class MeetingScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: const [
-            SafeArea(
+          children: [
+            const SafeArea(
               child: Text(
                 "Teilnehmer",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-            SafeArea(child: MeetingParticipantList())
+            SafeArea(
+                child: ChangeNotifierProvider<MeetingModel>(
+                    create: (context) => MeetingModel(),
+                    child: const MeetingParticipantList()))
           ],
         ),
       ),

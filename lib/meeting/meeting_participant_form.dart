@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'meeting_model.dart';
+import 'meeting_participant.dart';
 
 class MeetingParticipantForm extends StatefulWidget {
   const MeetingParticipantForm({Key? key}) : super(key: key);
@@ -10,12 +14,21 @@ class MeetingParticipantForm extends StatefulWidget {
 class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
   final _formKey = GlobalKey<FormState>();
 
+  final _nameController = TextEditingController();
+
   var _showForm = false;
 
   void _toggleForm() {
     setState(() {
       _showForm = !_showForm;
     });
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -27,6 +40,7 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
               children: [
                 TextFormField(
                   autofocus: true,
+                  controller: _nameController,
                   decoration: const InputDecoration(
                       icon: Icon(Icons.person),
                       labelText: "Name",
@@ -45,8 +59,8 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
                       final currentState = _formKey.currentState;
 
                       if (currentState!.validate()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Speichern ...")));
+                        Provider.of<MeetingModel>(context, listen: false).add(
+                            MeetingParticipant(name: _nameController.text));
 
                         currentState.reset();
 
