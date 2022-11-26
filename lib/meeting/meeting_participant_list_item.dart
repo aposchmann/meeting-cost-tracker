@@ -1,26 +1,14 @@
 import 'package:flutter/material.dart';
 
-class MeetingParticipantListItem extends StatefulWidget {
-  const MeetingParticipantListItem({super.key, this.participantName});
+class MeetingParticipantListItem extends StatelessWidget {
+  const MeetingParticipantListItem({super.key, required this.child});
 
-  final String? participantName;
+  final Widget child;
 
-  @override
-  State<MeetingParticipantListItem> createState() =>
-      _MeetingParticipantListItemState();
-}
-
-class _MeetingParticipantListItemState
-    extends State<MeetingParticipantListItem> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: SafeArea(
-          minimum: const EdgeInsets.all(15),
-          child: Text(
-            widget.participantName ?? "➕",
-            style: const TextStyle(fontSize: 16),
-          )),
+      child: SafeArea(minimum: const EdgeInsets.all(15), child: child),
     );
   }
 }
