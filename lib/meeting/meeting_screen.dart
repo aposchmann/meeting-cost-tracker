@@ -21,18 +21,16 @@ class MeetingScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SafeArea(
-              child: Text(
-                "Teilnehmer",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
+            const Text(
+              "Teilnehmer",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SafeArea(
-                child: ChangeNotifierProvider<MeetingModel>(
-                    create: (context) => MeetingModel(),
-                    child: const MeetingParticipantList()))
+            Expanded(
+              child: ChangeNotifierProvider<MeetingModel>(
+                  create: (context) => MeetingModel(),
+                  child: const MeetingParticipantList()),
+            ),
           ],
         ),
       ),

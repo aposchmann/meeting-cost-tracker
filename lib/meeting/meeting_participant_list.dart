@@ -11,19 +11,16 @@ class MeetingParticipantList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        ...Provider.of<MeetingModel>(context)
-            .participants
-            .map((participant) => MeetingParticipantListItem(
-                  child: MeetingParticipantEntry(
-                    participant: participant,
-                  ),
-                ))
-            .toList(),
-        const MeetingParticipantListItem(child: MeetingParticipantForm())
-      ],
-    );
+    var participants = Provider.of<MeetingModel>(context).participants;
+
+    return ListView.separated(
+        itemBuilder: (context, index) => index == participants.length
+            ? const MeetingParticipantListItem(child: MeetingParticipantForm())
+            : MeetingParticipantListItem(
+                child: MeetingParticipantEntry(
+                participant: participants[index],
+              )),
+        separatorBuilder: (context, index) => const Divider(),
+        itemCount: participants.length + 1);
   }
 }

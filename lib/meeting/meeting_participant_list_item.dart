@@ -7,8 +7,9 @@ class MeetingParticipantListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: SafeArea(minimum: const EdgeInsets.all(15), child: child),
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: child,
     );
   }
 }
