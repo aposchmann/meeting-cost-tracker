@@ -46,6 +46,7 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
                       labelText: "Name",
                       hintText: "Der Name des Teilnehmers"),
                   maxLength: 30,
+                  onFieldSubmitted: (_) => _onSubmit(context),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Bitte geben Sie einen Text ein";
@@ -55,18 +56,7 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
                   },
                 ),
                 ElevatedButton(
-                    onPressed: () {
-                      final currentState = _formKey.currentState;
-
-                      if (currentState!.validate()) {
-                        Provider.of<MeetingModel>(context, listen: false).add(
-                            MeetingParticipant(name: _nameController.text));
-
-                        currentState.reset();
-
-                        _toggleForm();
-                      }
-                    },
+                    onPressed: () => _onSubmit(context),
                     child: const Text("Hinzufügen"))
               ],
             ))
@@ -76,5 +66,18 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
               Icons.add,
               color: Theme.of(context).primaryColor,
             ));
+  }
+
+  void _onSubmit(BuildContext context) {
+    final currentState = _formKey.currentState;
+
+    if (currentState!.validate()) {
+      Provider.of<MeetingModel>(context, listen: false)
+          .add(MeetingParticipant(name: _nameController.text));
+
+      currentState.reset();
+
+      _toggleForm();
+    }
   }
 }
