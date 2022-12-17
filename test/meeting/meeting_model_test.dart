@@ -15,7 +15,7 @@ void main() {
     expect(meetingModel.participants, [meetingParticipant]);
   });
 
-  test("Notifies listeners on add a new participant", () {
+  test("Notifies listeners on adding a new participant", () {
     final meetingModel = MeetingModel();
 
     var callbackCalled = false;
