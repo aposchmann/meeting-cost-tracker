@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../meeting/meeting_screen.dart';
 
@@ -11,6 +12,12 @@ class App extends StatelessWidget {
 
     return MaterialApp(
       title: title,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale("de")],
       theme: ThemeData(primarySwatch: Colors.lightGreen),
       home: MeetingScreen(title: title),
     );
