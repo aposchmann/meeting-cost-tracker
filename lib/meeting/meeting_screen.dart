@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'meeting_model.dart';
@@ -22,9 +23,9 @@ class MeetingScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            const Text(
-              "Teilnehmer",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Text(
+              AppLocalizations.of(context)!.participants,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Expanded(
               child: ChangeNotifierProvider<MeetingModel>(
