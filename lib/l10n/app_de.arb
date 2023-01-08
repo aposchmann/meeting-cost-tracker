@@ -1,0 +1,8 @@
+{
+  "appTitle": "Meeting Cost Tracker",
+  "buttonAdd": "Hinzufügen",
+  "formInputFeedbackMissingText": "Bitte geben Sie einen Text ein",
+  "meetingParticipants": "Teilnehmer",
+  "meetingParticipantName": "Name",
+  "meetingParticipantNameHint": "Der Name des Teilnehmers"
+}

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'meeting_model.dart';
 import 'meeting_participant.dart';
 
 class MeetingParticipantForm extends StatefulWidget {
-  const MeetingParticipantForm({Key? key}) : super(key: key);
+  const MeetingParticipantForm({super.key});
 
   @override
   State<MeetingParticipantForm> createState() => _MeetingParticipantFormState();
@@ -33,6 +34,8 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
 
   @override
   Widget build(BuildContext context) {
+    var localizations = AppLocalizations.of(context)!;
+
     return _showForm
         ? Form(
             key: _formKey,
@@ -41,15 +44,15 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
                 TextFormField(
                   autofocus: true,
                   controller: _nameController,
-                  decoration: const InputDecoration(
-                      icon: Icon(Icons.person),
-                      labelText: "Name",
-                      hintText: "Der Name des Teilnehmers"),
+                  decoration: InputDecoration(
+                      icon: const Icon(Icons.person),
+                      labelText: localizations.meetingParticipantName,
+                      hintText: localizations.meetingParticipantNameHint),
                   maxLength: 30,
                   onFieldSubmitted: (_) => _onSubmit(context),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Bitte geben Sie einen Text ein";
+                      return localizations.formInputFeedbackMissingText;
                     }
 
                     return null;
@@ -57,7 +60,7 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
                 ),
                 ElevatedButton(
                     onPressed: () => _onSubmit(context),
-                    child: const Text("Hinzufügen"))
+                    child: Text(localizations.buttonAdd))
               ],
             ))
         : IconButton(
