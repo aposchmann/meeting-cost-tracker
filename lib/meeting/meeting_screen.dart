@@ -6,25 +6,22 @@ import 'meeting_model.dart';
 import 'meeting_participant_list.dart';
 
 class MeetingScreen extends StatelessWidget {
-  const MeetingScreen({
-    Key? key,
-    required this.title,
-  }) : super(key: key);
-
-  final String title;
+  const MeetingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(localizations.appTitle),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             Text(
-              AppLocalizations.of(context)!.participants,
+              localizations.meetingParticipants,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Expanded(
