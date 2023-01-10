@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,7 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
   final _formKey = GlobalKey<FormState>();
 
   final _nameController = TextEditingController();
+  final _hourlyRateController = TextEditingController();
 
   var _showForm = false;
 
@@ -28,6 +30,7 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
   @override
   void dispose() {
     _nameController.dispose();
+    _hourlyRateController.dispose();
 
     super.dispose();
   }
@@ -52,7 +55,27 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
                   onFieldSubmitted: (_) => _onSubmit(context),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return localizations.formInputFeedbackMissingText;
+                      return localizations.formInputFeedbackMissingValue;
+                    }
+
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _hourlyRateController,
+                  decoration: InputDecoration(
+                      icon: const Icon(Icons.attach_money),
+                      labelText: localizations.meetingParticipantHourlyRate,
+                      hintText: localizations.meetingParticipantHourlyRateHint),
+                  keyboardType: TextInputType.number,
+                  onFieldSubmitted: (_) => _onSubmit(context),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return localizations.formInputFeedbackMissingValue;
+                    }
+
+                    if (!RegExp(r"^\d+(?:,\d{1,2})?$").hasMatch(value)) {
+                      return localizations.formInputFeedbackInvalidMoneyValue;
                     }
 
                     return null;
@@ -75,8 +98,12 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
     final currentState = _formKey.currentState;
 
     if (currentState!.validate()) {
-      Provider.of<MeetingModel>(context, listen: false).add(
-          MeetingParticipant(name: _nameController.text, hourlyRateInCent: 42));
+      Provider.of<MeetingModel>(context, listen: false).add(MeetingParticipant(
+          name: _nameController.text,
+          hourlyRateInCent:
+              (double.parse(_hourlyRateController.text.replaceAll(",", ".")) *
+                      100)
+                  .round()));
 
       currentState.reset();
 
