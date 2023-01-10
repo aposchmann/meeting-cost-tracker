@@ -75,8 +75,8 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
     final currentState = _formKey.currentState;
 
     if (currentState!.validate()) {
-      Provider.of<MeetingModel>(context, listen: false)
-          .add(MeetingParticipant(name: _nameController.text));
+      Provider.of<MeetingModel>(context, listen: false).add(
+          MeetingParticipant(name: _nameController.text, hourlyRateInCent: 42));
 
       currentState.reset();
 

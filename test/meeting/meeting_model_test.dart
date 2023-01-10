@@ -8,7 +8,9 @@ void main() {
 
   test("Adds a new participant to the meeting model", () {
     final meetingModel = MeetingModel();
-    final meetingParticipant = MeetingParticipant(name: "Test Participant");
+
+    final meetingParticipant =
+        MeetingParticipant(name: "Test Participant", hourlyRateInCent: 420);
 
     meetingModel.add(meetingParticipant);
 
@@ -24,7 +26,8 @@ void main() {
       callbackCalled = true;
     });
 
-    meetingModel.add(MeetingParticipant(name: "Test Participant"));
+    meetingModel.add(
+        MeetingParticipant(name: "Test Participant", hourlyRateInCent: 420));
 
     expect(callbackCalled, true);
   });
