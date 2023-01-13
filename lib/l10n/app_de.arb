@@ -1,8 +1,11 @@
 {
   "appTitle": "Meeting Cost Tracker",
   "buttonAdd": "Hinzufügen",
-  "formInputFeedbackMissingText": "Bitte geben Sie einen Text ein",
+  "formInputFeedbackInvalidMoneyValue": "Bitte geben Sie einen Währungsbetrag ein",
+  "formInputFeedbackMissingValue": "Bitte geben Sie einen Wert ein",
   "meetingParticipants": "Teilnehmer",
+  "meetingParticipantHourlyRate": "Kosten pro Stunde",
+  "meetingParticipantHourlyRateHint": "Die Kosten pro Stunde des Teilnehmers",
   "meetingParticipantName": "Name",
   "meetingParticipantNameHint": "Der Name des Teilnehmers"
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/number_symbols_data.dart' show numberFormatSymbols;
 import 'package:provider/provider.dart';
 
 import 'meeting_model.dart';
@@ -16,6 +18,7 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
   final _formKey = GlobalKey<FormState>();
 
   final _nameController = TextEditingController();
+  final _hourlyRateController = TextEditingController();
 
   var _showForm = false;
 
@@ -28,13 +31,20 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
   @override
   void dispose() {
     _nameController.dispose();
+    _hourlyRateController.dispose();
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    var localizations = AppLocalizations.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
+
+    final decimalSeparator =
+        numberFormatSymbols[localizations.localeName]?.DECIMAL_SEP ?? ".";
+
+    final currencyRegularExpression =
+        RegExp(r'^\d+(?:[' + decimalSeparator + r']\d{1,2})?$');
 
     return _showForm
         ? Form(
@@ -52,7 +62,27 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
                   onFieldSubmitted: (_) => _onSubmit(context),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return localizations.formInputFeedbackMissingText;
+                      return localizations.formInputFeedbackMissingValue;
+                    }
+
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _hourlyRateController,
+                  decoration: InputDecoration(
+                      icon: const Icon(Icons.payments),
+                      labelText: localizations.meetingParticipantHourlyRate,
+                      hintText: localizations.meetingParticipantHourlyRateHint),
+                  keyboardType: TextInputType.number,
+                  onFieldSubmitted: (_) => _onSubmit(context),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return localizations.formInputFeedbackMissingValue;
+                    }
+
+                    if (!currencyRegularExpression.hasMatch(value)) {
+                      return localizations.formInputFeedbackInvalidMoneyValue;
                     }
 
                     return null;
@@ -73,10 +103,14 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
 
   void _onSubmit(BuildContext context) {
     final currentState = _formKey.currentState;
+    final localizations = AppLocalizations.of(context)!;
 
     if (currentState!.validate()) {
-      Provider.of<MeetingModel>(context, listen: false)
-          .add(MeetingParticipant(name: _nameController.text));
+      Provider.of<MeetingModel>(context, listen: false).add(MeetingParticipant(
+          name: _nameController.text,
+          hourlyRate:
+              NumberFormat.simpleCurrency(locale: localizations.localeName)
+                  .parse(_hourlyRateController.text)));
 
       currentState.reset();
 
