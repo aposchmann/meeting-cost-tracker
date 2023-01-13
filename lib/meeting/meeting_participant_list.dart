@@ -11,7 +11,7 @@ class MeetingParticipantList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var participants = Provider.of<MeetingModel>(context).participants;
+    final participants = Provider.of<MeetingModel>(context).participants;
 
     return ListView.separated(
         itemBuilder: (context, index) => index == participants.length

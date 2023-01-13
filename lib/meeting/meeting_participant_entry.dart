@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 import 'meeting_participant.dart';
 
@@ -9,9 +11,22 @@ class MeetingParticipantEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      participant.name,
-      style: const TextStyle(fontSize: 16),
+    final localizations = AppLocalizations.of(context)!;
+
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            participant.name,
+            style: const TextStyle(fontSize: 16),
+          ),
+        ),
+        Text(
+          NumberFormat.simpleCurrency(locale: localizations.localeName)
+              .format(participant.hourlyRateInCent),
+          style: const TextStyle(fontSize: 16),
+        )
+      ],
     );
   }
 }

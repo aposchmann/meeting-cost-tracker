@@ -3,5 +3,5 @@ class MeetingParticipant {
 
   String name;
 
-  int hourlyRateInCent;
+  num hourlyRateInCent;
 }

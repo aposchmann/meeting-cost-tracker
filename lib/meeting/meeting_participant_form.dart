@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/number_symbols_data.dart' show numberFormatSymbols;
 import 'package:provider/provider.dart';
 
 import 'meeting_model.dart';
@@ -37,7 +38,10 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
 
   @override
   Widget build(BuildContext context) {
-    var localizations = AppLocalizations.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
+
+    final decimalSeparator =
+        numberFormatSymbols[localizations.localeName]?.DECIMAL_SEP ?? ".";
 
     return _showForm
         ? Form(
@@ -64,7 +68,7 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
                 TextFormField(
                   controller: _hourlyRateController,
                   decoration: InputDecoration(
-                      icon: const Icon(Icons.attach_money),
+                      icon: const Icon(Icons.payments),
                       labelText: localizations.meetingParticipantHourlyRate,
                       hintText: localizations.meetingParticipantHourlyRateHint),
                   keyboardType: TextInputType.number,
@@ -74,7 +78,8 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
                       return localizations.formInputFeedbackMissingValue;
                     }
 
-                    if (!RegExp(r"^\d+(?:,\d{1,2})?$").hasMatch(value)) {
+                    if (!RegExp(r'^\d+(?:[' + decimalSeparator + r']\d{1,2})?$')
+                        .hasMatch(value)) {
                       return localizations.formInputFeedbackInvalidMoneyValue;
                     }
 
@@ -96,14 +101,14 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
 
   void _onSubmit(BuildContext context) {
     final currentState = _formKey.currentState;
+    final localizations = AppLocalizations.of(context)!;
 
     if (currentState!.validate()) {
       Provider.of<MeetingModel>(context, listen: false).add(MeetingParticipant(
           name: _nameController.text,
           hourlyRateInCent:
-              (double.parse(_hourlyRateController.text.replaceAll(",", ".")) *
-                      100)
-                  .round()));
+              NumberFormat.simpleCurrency(locale: localizations.localeName)
+                  .parse(_hourlyRateController.text)));
 
       currentState.reset();
 
