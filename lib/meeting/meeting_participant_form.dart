@@ -43,6 +43,9 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
     final decimalSeparator =
         numberFormatSymbols[localizations.localeName]?.DECIMAL_SEP ?? ".";
 
+    final currencyRegularExpression =
+        RegExp(r'^\d+(?:[' + decimalSeparator + r']\d{1,2})?$');
+
     return _showForm
         ? Form(
             key: _formKey,
@@ -78,8 +81,7 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
                       return localizations.formInputFeedbackMissingValue;
                     }
 
-                    if (!RegExp(r'^\d+(?:[' + decimalSeparator + r']\d{1,2})?$')
-                        .hasMatch(value)) {
+                    if (!currencyRegularExpression.hasMatch(value)) {
                       return localizations.formInputFeedbackInvalidMoneyValue;
                     }
 
@@ -106,7 +108,7 @@ class _MeetingParticipantFormState extends State<MeetingParticipantForm> {
     if (currentState!.validate()) {
       Provider.of<MeetingModel>(context, listen: false).add(MeetingParticipant(
           name: _nameController.text,
-          hourlyRateInCent:
+          hourlyRate:
               NumberFormat.simpleCurrency(locale: localizations.localeName)
                   .parse(_hourlyRateController.text)));
 

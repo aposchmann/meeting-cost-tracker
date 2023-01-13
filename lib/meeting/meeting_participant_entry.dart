@@ -23,7 +23,7 @@ class MeetingParticipantEntry extends StatelessWidget {
         ),
         Text(
           NumberFormat.simpleCurrency(locale: localizations.localeName)
-              .format(participant.hourlyRateInCent),
+              .format(participant.hourlyRate),
           style: const TextStyle(fontSize: 16),
         )
       ],

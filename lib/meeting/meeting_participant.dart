@@ -1,7 +1,7 @@
 class MeetingParticipant {
-  MeetingParticipant({required this.name, required this.hourlyRateInCent});
+  MeetingParticipant({required this.name, required this.hourlyRate});
 
   String name;
 
-  num hourlyRateInCent;
+  num hourlyRate;
 }

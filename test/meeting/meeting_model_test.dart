@@ -10,7 +10,7 @@ void main() {
     final meetingModel = MeetingModel();
 
     final meetingParticipant =
-        MeetingParticipant(name: "Test Participant", hourlyRateInCent: 420);
+        MeetingParticipant(name: "Test Participant", hourlyRate: 420);
 
     meetingModel.add(meetingParticipant);
 
@@ -26,8 +26,8 @@ void main() {
       callbackCalled = true;
     });
 
-    meetingModel.add(
-        MeetingParticipant(name: "Test Participant", hourlyRateInCent: 420));
+    meetingModel
+        .add(MeetingParticipant(name: "Test Participant", hourlyRate: 420));
 
     expect(callbackCalled, true);
   });
